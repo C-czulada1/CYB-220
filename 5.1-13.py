@@ -136,6 +136,7 @@ for username in usernames:
 usernames = []
 if not usernames:
     print("We need to find some users!")
+    
 #5-10
 current_users = ['Thomas', 'Frank', 'John', 'Ryan', 'Adam']
 new_users = ['mark', 'susie', 'john', 'joey', 'adam']
@@ -159,3 +160,4 @@ for number in numbers:
         print("3rd")
     else:
         print(f"{number}th")
+
