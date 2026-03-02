@@ -13,9 +13,10 @@ pin = eg.passwordbox("Create a PIN for your budget tracker:", "Security")
 
 choice = eg.buttonbox("What would you like to do first?",
                       "Start Menu",
+
                       choices=["Add Income", "Add Expense"])
 if choice == "Add Income":
-    income = eg.integerbox("Enter Income Amount:", "Income Amount", lowerbound=0)
+    income = eg.integerbox("Enter Income Amount:", "Income Amount", lowerbound=0, upperbound=100000)
     if income:
         income_total += income
 while True:
@@ -28,8 +29,8 @@ while True:
         fields = ["Expense Name", "Amount", "Category"]
         values = eg.multenterbox("Enter expense details:","New Expense", fields)
         if values:
-            expense_name, amount, cateory = values
-            expenses.append((expense_name, float(amount), cateory))
+            expense_name, amount, category = values
+            expenses.append((expense_name, float(amount), category))
     elif action == "View Expenses":
         expense_text = "\n".join([f"{e[0]} - ${e[1]} ({e[2]})" for e in expenses])
         eg.textbox("Your expenses:", "Expense List", expense_text)
@@ -40,6 +41,9 @@ while True:
                    "Financial Overview",
                    f"Income: ${income_total}\nExpenses: ${total_expenses}\nBalance: ${balance}")
     elif action == "Category Spending":
+        if not expenses:
+            eg.msgbox("No expenses selected.", "Please enter expenses")
+            continue
         categories = list(set([e[2] for e in expenses]))
         selected = eg.multichoicebox("select a category:",
                                      "Categories",
@@ -51,7 +55,7 @@ while True:
                 eg.msgbox(results, "Category Results")
     elif action == "Exit":
         confirm = eg.ynbox("Are you sure you want to exit?", "Continue")
-        if confirm == 0:
+        if confirm:
             break
 total_expenses = sum(e[1] for e in expenses)
 balance = income_total - total_expenses
