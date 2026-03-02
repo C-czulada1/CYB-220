@@ -1,5 +1,3 @@
-from dataclasses import fields
-
 import easygui as eg
 
 expenses = []
@@ -60,3 +58,4 @@ while True:
 total_expenses = sum(e[1] for e in expenses)
 balance = income_total - total_expenses
 eg.msgbox(f"Final Balance: ${balance}", "Goodbye")
+
